@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Omoa Fishing Alpha</title>
+    <style>
+        body { margin: 0; background: #0077be; overflow: hidden; font-family: sans-serif; }
+        canvas { display: block; background: linear-gradient(#1e90ff, #00ced1); }
+        #ui { position: absolute; top: 10px; left: 10px; color: white; font-size: 20px; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div id="ui">Score: <span id="score">0</span></div>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let score = 0;
+        let fish = { x: -50, y: Math.random() * canvas.height, speed: 2, size: 40 };
+
+        function drawFish() {
+            // Body
+            ctx.fillStyle = "#ff7f50"; // Tropical Orange
+            ctx.beginPath();
+            ctx.ellipse(fish.x, fish.y, fish.size, fish.size/2, 0, 0, Math.PI * 2);
+            ctx.fill();
+            // Tail
+            ctx.beginPath();
+            ctx.moveTo(fish.x - fish.size, fish.y);
+            ctx.lineTo(fish.x - fish.size - 15, fish.y - 15);
+            ctx.lineTo(fish.x - fish.size - 15, fish.y + 15);
+            ctx.fill();
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            fish.x += fish.speed;
+
+            // Reset fish if it swims off screen
+            if (fish.x > canvas.width + 50) {
+                fish.x = -50;
+                fish.y = Math.random() * canvas.height;
+            }
+
+            drawFish();
+            requestAnimationFrame(update);
+        }
+
+        // Catch the fish!
+        canvas.addEventListener('mousedown', (e) => {
+            const dist = Math.hypot(e.clientX - fish.x, e.clientY - fish.y);
+            if (dist < fish.size) {
+                score++;
+                scoreEl.innerText = score;
+                fish.x = -50; // Reset fish
+                fish.y = Math.random() * canvas.height;
+                fish.speed += 0.2; // Make it harder!
+            }
+        });
+
+        update();
+    </script>
+</body>
+</html>
