@@ -29,7 +29,7 @@ const p2Img = new Image(); p2Img.src = 'player2.png';
 let scores = { p1: 0, p2: 0 };
 const gravity = 0.5;
 
-const ball = { x: 400, y: 100, r: 20, dx: 4, dy: 0 };
+const ball = { x: 400, y: 100, r: 20, dx: 2, dy: 0 };
 const p1 = { x: 100, y: 320, w: 80, h: 120, dy: 0, jumping: false, side: 'left' };
 const p2 = { x: 620, y: 320, w: 80, h: 120, dy: 0, jumping: false, side: 'right' };
 
@@ -58,8 +58,20 @@ function handlePhysics(obj, floorY) {
 
 function checkCollision(p, b) {
     if (b.x + b.r > p.x && b.x - b.r < p.x + p.w && b.y + b.r > p.y && b.y - b.r < p.y + p.h) {
-        b.dy = -12;
-        b.dx = (b.x - (p.x + p.w/2)) * 0.5;
+        b.dy = -9;
+
+        // 2. Horizontal bounce (Dampened)
+        let playerCenter = p.x + (p.w / 2);
+        let impactPoint = (b.x - playerCenter) * 0.2; // Changed from 0.5 to 0.2 to reduce power
+
+        // 3. CAP the speed (Prevents the ball from flying outside the view)
+        const maxSpeed = 6;
+        if (impactPoint > maxSpeed) impactPoint = maxSpeed;
+        if (impactPoint < -maxSpeed) impactPoint = -maxSpeed;
+
+        b.dx = impactPoint;
+
+        // 4. Move ball out of player body to prevent "sticking"
         b.y = p.y - b.r;
     }
 }
@@ -78,7 +90,7 @@ function update() {
     handlePhysics(p1, 320);
     handlePhysics(p2, 320);
     
-    ball.dy += gravity * 0.6/2;
+    ball.dy += gravity * 0.3;
     ball.x += ball.dx;
     ball.y += ball.dy;
 
