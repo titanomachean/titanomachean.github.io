@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caribbean Beach Volley</title>
+    <style>
+        body { margin: 0; background: #333; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Arial', sans-serif; }
+        canvas { border: 8px solid #fff; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: #87CEEB; }
+        #ui { color: #f1c40f; font-size: 40px; font-weight: bold; margin-bottom: 10px; text-shadow: 2px 2px #000; }
+        #status { color: white; position: absolute; bottom: 20px; font-size: 14px; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <div id="ui">SCORE: <span id="score">0</span></div>
+    <canvas id="gameCanvas"></canvas>
+    <div id="status">Use ARROWS to move, SPACE to jump.</div>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const scoreElement = document.getElementById('score');
+
+canvas.width = 800;
+canvas.height = 500;
+
+// --- 1. ASSET LOADING ---
+const bgImg = new Image();
+const ballImg = new Image();
+
+// Reliable Caribbean Background & Volleyball Sprite
+bgImg.src = 'beach.png';
+ballImg.src = 'volleyball.png';
+
+let assetsLoaded = 0;
+function checkAssets() {
+    assetsLoaded++;
+    if (assetsLoaded === 2) gameLoop(); // Only start when both are ready
+}
+
+bgImg.onload = checkAssets;
+ballImg.onload = checkAssets;
+
+// Fallback in case links break:
+bgImg.onerror = () => { console.error("BG failed"); checkAssets(); };
+ballImg.onerror = () => { console.error("Ball failed"); checkAssets(); };
+
+// --- 2. GAME STATE ---
+let score = 0;
+const gravity = 0.5;
+const player = { x: 100, y: 360, w: 50, h: 90, dy: 0, speed: 8, jumping: false };
+const ball = { x: 400, y: 100, r: 25, dx: 4, dy: 0, rotation: 0 };
+
+const keys = {};
+window.addEventListener('keydown', e => keys[e.code] = true);
+window.addEventListener('keyup', e => keys[e.code] = false);
+
+function update() {
+    // Player Controls
+    if (keys['ArrowLeft'] && player.x > 0) player.x -= player.speed;
+    if (keys['ArrowRight'] && player.x < canvas.width/2 - player.w) player.x += player.speed;
+    if (keys['Space'] && !player.jumping) { player.dy = -14; player.jumping = true; }
+
+    // Player Physics
+    player.dy += gravity;
+    player.y += player.dy;
+    if (player.y > 360) { player.y = 360; player.dy = 0; player.jumping = false; }
+
+    // Ball Physics
+    ball.dy += gravity * 0.7;
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+    ball.rotation += ball.dx * 0.05;
+
+    // Ball Wall Bounce
+    if (ball.x + ball.r > canvas.width || ball.x - ball.r < 0) ball.dx *= -1;
+    if (ball.y - ball.r < 0) { ball.y = ball.r; ball.dy *= -0.8; }
+
+    // Ball Ground Reset
+    if (ball.y + ball.r > canvas.height - 50) {
+        score = 0; scoreElement.innerText = score;
+        ball.x = 400; ball.y = 100; ball.dx = 4; ball.dy = 0;
+    }
+
+    // Collision Detection
+    if (ball.x + ball.r > player.x && ball.x - ball.r < player.x + player.w &&
+        ball.y + ball.r > player.y && ball.y - ball.r < player.y + player.h) {
+        ball.dy = -13;
+        ball.dx = (ball.x - (player.x + player.w/2)) * 0.5;
+        score++;
+        scoreElement.innerText = score;
+        ball.y = player.y - ball.r;
+    }
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Draw Background
+    if (bgImg.complete) ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+
+    // 2. Draw Net
+    ctx.fillStyle = "rgba(255,255,255,0.6)";
+    ctx.fillRect(canvas.width/2 - 2, 250, 4, 250);
+
+    // 3. Draw Player
+    ctx.fillStyle = "#e67e22";
+    ctx.fillRect(player.x, player.y, player.w, player.h);
+
+    // 4. Draw Ball Sprite
+    ctx.save();
+    ctx.translate(ball.x, ball.y);
+    ctx.rotate(ball.rotation);
+    if (ballImg.complete) {
+        ctx.drawImage(ballImg, -ball.r, -ball.r, ball.r*2, ball.r*2);
+    } else {
+        ctx.beginPath(); ctx.arc(0,0,ball.r,0,Math.PI*2); ctx.fillStyle="white"; ctx.fill();
+    }
+    ctx.restore();
+}
+
+function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+</script>
+</body>
+</html>
