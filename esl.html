@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta content="words.jpg" property="og:image">
+    <link rel="icon" type="image/jpg" href="words.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Grammar & Pop Culture Lesson</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      overflow: hidden;
+      margin-bottom: 25px;
+      border-radius: 4px;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .lyric-box {
+      background: #222;
+      color: #00ffcc;
+      padding: 15px;
+      border-left: 5px solid #ff0055;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+    .explanation {
+      background: #eef1f6;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 30px;
+    }
+    .explanation h3 {
+      margin-top: 0;
+      color: #003366;
+    }
+    .quiz-box {
+      border: 2px solid #003366;
+      padding: 25px;
+      border-radius: 6px;
+      background-color: #fafbfc;
+    }
+    .quiz-title {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+    .options-container {
+      margin: 15px 0;
+    }
+    .option-label {
+      display: block;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .option-label:hover {
+      background: #f0f4f8;
+    }
+    .option-label input {
+      margin-right: 10px;
+    }
+    .submit-btn {
+      background-color: #003366;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .submit-btn:hover {
+      background-color: #002244;
+    }
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .footer-disclaimer {
+      margin-top: 40px;
+      font-size: 11px;
+      color: #888;
+      text-align: center;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- 1. The Pop Culture Wrapper -->
+  <h2>Lesson 1: The Language of Hypotheses (Stranger Things)</h2>
+  
+  <div class="video-wrapper">
+    <!-- Legal Fair Use: Embedding public official media directly from YouTube -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/bV0RAcuG2Ao?si=JDFK2fZ4lJBe3J5p" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+
+  <div class="lyric-box">
+    "And if I only could, I'd make a deal with God, and I'd get him to swap our places..."
+  </div>
+
+  <!-- 2. The Bilingual Conceptual Breakdown -->
+  <div class="explanation">
+    <h3>Grammar Breakdown / Explicación</h3>
+    <p><strong>Español:</strong> Cuando expresas una situación imaginaria o imposible en el presente ("Si tan solo pudiera..."), en inglés formal se usa el <strong>Segundo Condicional</strong>. La regla dicta usar <em>If + Pasado Simple</em>, seguido por <em>Would + Verbo Base</em>.</p>
+    <p><strong>English:</strong> Kate Bush sings "I'd make a deal" (I <strong>would</strong> make). Even though she is talking about the present moment, she uses the past tense structure to signal that the situation is completely imaginary.</p>
+  </div>
+
+  <!-- 3. The Standardized Elite Test Engine -->
+  <div class="quiz-box">
+    <div class="quiz-title">UAGM / PAA Practice Exam - Sentence Completion</div>
+    <hr>
+    <p style="font-weight: bold; margin-top: 15px;">
+      Directions: Select the option that grammatically completes the hypothetical statement.
+    </p>
+    
+    <p style="font-size: 16px; margin: 20px 0;">
+      "If the administrative bureaucracy _________ more streamlined, the displaced individual _________ access their public stipends immediately."
+    </p>
+
+    <div class="options-container">
+      <label class="option-label">
+        <input type="radio" name="conditional-q" value="incorrect-1"> A) is / will
+      </label>
+      <label class="option-label">
+        <input type="radio" name="conditional-q" id="correct-option" value="correct"> B) were / would
+      </label>
+      <label class="option-label">
+        <input type="radio" name="conditional-q" value="incorrect-2"> C) was / will be
+      </label>
+      <label class="option-label">
+        <input type="radio" name="conditional-q" value="incorrect-3"> D) provides / would
+      </label>
+    </div>
+
+    <button class="submit-btn" onclick="checkStandardizedAnswer()">Submit Answer</button>
+    <div id="feedback"></div>
+  </div>
+
+  <!-- Fair Use Legal Protection Footer -->
+  <div class="footer-disclaimer">
+    Legal Notice: Dialogue, lyrics, and characters referenced are the property of Netflix and Netflix Music/EMI. This site utilizes low-resolution media streams and textual snippets strictly for nonprofit, transformative language-learning analysis under Section 107 of the U.S. Copyright Act (Fair Use).
+  </div>
+</div>
+
+<script>
+function checkStandardizedAnswer() {
+  const feedbackElement = document.getElementById("feedback");
+  const isCorrectChecked = document.getElementById("correct-option").checked;
+  
+  // Check if user selected anything at all
+  const anyChecked = document.querySelector('input[name="conditional-q"]:checked');
+  if (!anyChecked) {
+    feedbackElement.innerText = "Por favor, selecciona una opción. / Please select an option.";
+    feedbackElement.style.color = "#ff9900";
+    return;
+  }
+
+  if (isCorrectChecked) {
+    feedbackElement.innerHTML = "✓ Correct! (¡Correcto!)<br><span style='font-weight:normal; font-size:14px; color:#555;'>In formal standardized exams, 'were' is used as the past subjunctive for all subjects in a hypothetical clause, which perfectly pairs with 'would'.</span>";
+    feedbackElement.style.color = "green";
+  } else {
+    feedbackElement.innerHTML = "✗ Incorrect. (Inténtalo de nuevo.)<br><span style='font-weight:normal; font-size:14px; color:#555;'>Remember the universal elite testing pattern: <strong>If + Past Tense (were), + Would + Base Verb</strong>. Options mixing 'is' or 'will' break parallel structure.</span>";
+    feedbackElement.style.color = "red";
+  }
+}
+</script>
+
+</body>
+</html>
